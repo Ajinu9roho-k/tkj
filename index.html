@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memori Kelas Funtustic TKJ B</title>
+    
+    <style>
+/* General Reset and Body Style */
+html, body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fef7c3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    padding: 30px;
+    font-size: 2.5em;
+    background-color: #ffec8b;
+    border-bottom: 5px solid #f3d270;
+    color: #5a3f2d;
+    font-family: 'Groovy';
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Story Section Styling */
+.story-section {
+    position: relative;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    color: #5a3f2d;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.story-section h2 {
+    text-align: center;
+    color: #0077cc;
+    margin-bottom: 15px;
+    font-size: 2em;
+}
+
+.story-section p {
+    margin-bottom: 10px;
+}
+
+/* Student Images Section */
+.student-images {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    text-align: center;
+}
+
+.student-images h2 {
+    font-size: 2em;
+    color: #0077cc;
+    margin-bottom: 20px;
+}
+
+.student-image-item {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+}
+
+.student-image-item img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.student-image-item p {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #5a3f2d;
+}
+
+/* Gallery Button Styling */
+.gallery-btn {
+    margin: 20px auto;
+    display: block;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    border-radius: 20px;
+    background-color: #f3d270;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Gallery Section for Kenangan */
+.kenangan-gallery {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    text-align: center;
+}
+
+.kenangan-gallery img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding-top: 60px;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+#caption {
+    text-align: center;
+    color: #fff;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #f1f1f1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Slideshow Section */
+.slide {
+    display: none;
+    width: 100%;
+    border-radius: 15px;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.slide.active {
+    display: block;
+    opacity: 1;
+}
+
+.dot-container {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #717171;
+}
+
+/* Navigation Arrows */
+a.prev, a.next {
+    position: absolute;
+    top: 50%;
+    padding: 16px;
+    color: white;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+a.prev:hover, a.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+a.prev {
+    left: 15px;
+}
+
+a.next {
+    right: 15px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #ffec8b;
+    color: #5a3f2d;
+    margin-top: auto;
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Header */
+    header {
+        font-size: 1.8em; /* Ukuran font yang cukup besar tetapi tetap proporsional */
+        text-align: center; /* Memusatkan teks header untuk estetika */
+        padding: 10px 0; /* Memberikan jarak atas dan bawah */
+    }
+
+    /* Gambar Kenangan */
+    .kenangan-gallery img {
+        max-width: 100%; /* Memastikan gambar menggunakan seluruh lebar yang tersedia */
+        height: auto; /* Mempertahankan rasio aspek gambar */
+        margin-bottom: 10px; /* Memberikan jarak antar gambar */
+    }
+
+    /* Tombol Gallery */
+    .gallery-btn {
+        font-size: 1em; /* Ukuran font tombol yang lebih proporsional */
+        padding: 10px 20px; /* Padding yang lebih kecil agar tombol tidak terlalu besar */
+        display: block; /* Membuat tombol memenuhi lebar kontainer */
+        width: 100%; /* Tombol melebar sepenuhnya */
+        text-align: center; /* Teks tombol tetap berada di tengah */
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 90%;
+        margin: 0 auto; /* Memusatkan modal di layar */
+        padding: 15px; /* Memberikan jarak dalam modal */
+        border-radius: 8px; /* Sudut yang lebih lembut untuk estetika */
+    }
+
+    /* Slideshow */
+    .slideshow-container {
+        width: 100%; /* Pastikan slideshow mengambil lebar penuh */
+        overflow: hidden; /* Menyembunyikan gambar yang melampaui kontainer */
+    }
+
+    .slideshow-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out; /* Animasi halus saat bergeser */
+        width: 100%; /* Pastikan gambar mengambil lebar penuh */
+    }
+
+    .slideshow-images img {
+        width: 100%; /* Membuat gambar mengisi lebar kontainer */
+        height: auto; /* Mempertahankan rasio gambar */
+    }
+
+    /* Tombol Geser */
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5); /* Warna latar belakang semi-transparan */
+        color: white;
+        font-size: 2em;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        z-index: 100; /* Memastikan tombol tetap di atas gambar */
+    }
+
+    .prev {
+        left: 10px; /* Posisi tombol sebelumnya di kiri */
+    }
+
+    .next {
+        right: 10px; /* Posisi tombol selanjutnya di kanan */
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.7); /* Efek hover untuk tombol */
+    }
+
+    /* Gambar Siswa */
+    .student-images {
+        max-width: 100%; /* Membuat gambar siswa responsif */
+        height: auto; /* Mempertahankan rasio aspek */
+        margin-bottom: 20px; /* Jarak antar gambar */
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Header */
+    header {
+        font-size: 2em;
+        text-align: left; /* Memastikan header berada di kiri untuk layar besar */
+    }
+
+    /* Gambar Kenangan */
+    .kenangan-gallery {
+        max-width: 1000px;
+        margin: 0 auto; /* Memusatkan galeri */
+        display: grid; /* Menggunakan grid untuk tata letak gambar */
+        grid-template-columns: repeat(3, 1fr); /* 3 kolom untuk galeri */
+        gap: 20px; /* Jarak antar gambar di galeri */
+    }
+
+    .kenangan-gallery img {
+        width: 100%; /* Membuat gambar mengisi lebar kolom */
+        height: auto; /* Mempertahankan rasio gambar */
+    }
+
+    /* Tombol Gallery */
+    .gallery-btn {
+        font-size: 1.2em;
+        padding: 12px 25px;
+        display: inline-block;
+    }
+
+    /* Slideshow */
+    .slideshow-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto; /* Memusatkan slideshow di layar besar */
+    }
+
+    .slideshow-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        width: 100%;
+    }
+
+    .slideshow-images img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Tombol Geser */
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 3em;
+        padding: 15px;
+        border: none;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .prev {
+        left: 20px;
+    }
+
+    .next {
+        right: 20px;
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.7); /* Efek hover pada tombol */
+    }
+
+    /* Gambar Siswa */
+    .student-images {
+        max-width: 900px;
+        margin: 0 auto; /* Memusatkan gambar siswa */
+    }
+}
+
+</style>
+
+
+</head>
+<body>
+    <!-- Menambahkan backsound -->
+    <audio id="backgroundAudio" autoplay loop>
+        <source src="Backsound.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <header>
+        MEMORI B TKJ 🎓
+    </header>
+
+    <!-- Slideshow Section -->
+    <div class="story-section">
+        <div class="slide fade active">
+            <img src="Gambar slideshow 1.jpg" alt="Slide 1">
+        </div>
+        <div class="slide fade">
+            <img src="Gambar slideshow 2.jpg" alt="Slide 2">
+        </div>
+        <div class="slide fade">
+            <img src="Gambar slideshow 3.jpg" alt="Slide 3">
+        </div>
+        <div class="slide fade">
+            <img src="Gambar slideshow 4.jpg" alt="Slide 4">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <!-- Dots for navigation -->
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+
+    <!-- Kisah Singkat Semasa SMK -->
+    <div class="story-section">
+        <h2>Memori Sejarah Kami 📚</h2>
+        <p>Ketika pertama kali melangkah ke SMK Nurul Azhar, kami adalah anak-anak muda penuh rasa takut dan kebingungan. Kami datang dengan mimpi-mimpi kecil dan hati yang ragu-ragu. Hari-hari pertama di sekolah ini terasa canggung—bertemu dengan wajah-wajah baru, beradaptasi dengan lingkungan yang asing, dan mencoba memahami semua harapan yang ada di depan kami. Namun, siapa sangka, perjalanan yang awalnya terasa berat ini berubah menjadi salah satu babak paling indah dalam hidup kami?</p>
+        <p>Di sekolah ini, kami belajar tentang arti kerja keras dan ketekunan. Ruang kelas yang sederhana, tawa canda teman-teman, hingga suara guru yang tak kenal lelah membimbing kami menjadi bagian dari kenangan yang tak akan tergantikan. Ada saat-saat ketika kami merasa lelah, gagal, bahkan ingin menyerah. Namun, tangan-tangan yang tak terlihat selalu mengangkat kami kembali—entah itu dari teman yang selalu ada di sisi, atau dari guru yang memberikan motivasi tanpa pamrih.</P>
+		<p>Di balik setiap tugas yang melelahkan, ada pelajaran hidup yang kami bawa. Praktikum yang penuh tantangan, ujian yang memacu adrenalin, hingga momen-momen kerja kelompok yang terkadang penuh perdebatan—semuanya perlahan membentuk kami menjadi pribadi yang lebih kuat.</P>
+		<P>Namun, tidak semua tentang sekolah ini adalah pelajaran di kelas. Ada begitu banyak momen kecil yang justru paling melekat di hati. Duduk di kantin sambil berbagi cerita, tertawa hingga lupa waktu saat jam istirahat, atau bahkan mengeluh bersama tentang tugas yang belum selesai. Semua itu sekarang menjadi kenangan yang begitu manis, meski saat itu mungkin kami menganggapnya hal biasa.</p>
+		<p>Dan kini, hari yang selalu kami tahu akan datang telah tiba. Hari terakhir di SMK Nurul Azhar. Kami berdiri di sini, di ambang pintu kehidupan yang baru, dengan perasaan yang bercampur aduk. Ada kebanggaan, karena kami berhasil menyelesaikan perjalanan ini, tetapi juga ada kesedihan yang tak terelakkan. Bagaimana mungkin kami meninggalkan tempat yang telah menjadi rumah kedua? Bagaimana mungkin kami melangkah meninggalkan teman-teman yang telah menjadi keluarga, dan guru-guru yang telah menjadi sosok inspirasi?</p>
+		<p>Saat ini, kami ingin menyampaikan rasa terima kasih yang mendalam. Kepada guru-guru yang telah membimbing kami, terima kasih atas segala ilmu, nasihat, dan ketulusan yang kalian berikan. Kalian tidak hanya mengajarkan kami untuk menjadi siswa yang baik, tetapi juga menjadi manusia yang lebih baik. Kepada teman-teman, terima kasih untuk semua tawa, pelukan, dan dukungan di saat-saat sulit. Kalian adalah bagian dari hidup kami yang tidak akan pernah terlupakan.</p>
+		<p>Perpisahan ini memang menyakitkan, tetapi kami percaya, ini bukan akhir. Di masa depan, ketika kita telah menempuh jalan masing-masing, kenangan ini akan tetap hidup dalam hati kita. SMK Nurul Azhar adalah tempat di mana mimpi-mimpi kecil kami tumbuh, tempat di mana kami belajar tentang persahabatan sejati, dan tempat di mana kami menemukan diri kami yang sebenarnya.</p>
+		<p>Selamat tinggal, SMK Nurul Azhar. Selamat tinggal teman-teman, guru-guru, dan semua kenangan indah yang ada di dalamnya. Kami pergi, tetapi hati kami akan selalu kembali ke tempat ini, ke masa-masa yang tidak akan pernah terulang. Sampai bertemu lagi, di masa depan yang lebih cerah.</p>
+		<p>Terima kasih atas segalanya.</p>
+		<p>Dengan cinta,</p>
+		<p>Kami, siswa-siswi 12 B TKJ SMK Nurul Azhar. 💖</P>
+    </div>
+
+    <!-- Student Images Section -->
+    <div class="student-images">
+        <h2>Selamat Menempuh Hidup Baru 💐💐💐</h2>
+        <div class="student-image-item">
+            <img src="Gambar siswa/1.jpg" alt="Siswa 1">
+            <p>Safira Ramaniya</p>
+			<p>Jakarta, 22 April 2006</p>
+        </div>
+        <div class="student-image-item">
+            <img src="Gambar siswa/2.jpg" alt="Siswa 2">
+            <p>Aisah</p>
+			<p>Bekasi, 17 Maret 2006</p>
+        </div>
+        <div class="student-image-item">
+            <img src="Gambar siswa/3.jpg" alt="Siswa 3">
+            <p>Vera Rizqia Ningsih</p>
+			<p>Bekasi, 02 Februari 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/4.jpg" alt="Siswa 3">
+            <p>Yelena Zaebunisa</p>
+			<p>Jakarta, 27 Mei 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/5.jpg" alt="Siswa 3">
+            <p>Nabil Mufid</p>
+			<p>Bekasi, 24 April 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/6.jpg" alt="Siswa 3">
+            <p>Mohammad Faiz</p>
+			<p>Bekasi, 14 Juli 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/7.jpg" alt="Siswa 3">
+            <p>M. Sidiq Abdillah</p>
+			<p>Bekasi, 04 Agustus 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/8.jpg" alt="Siswa 3">
+            <p>Ficki Aidil Akbar</p>
+			<p>Bekasi, 23 September 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/9.jpg" alt="Siswa 3">
+            <p>Karen Angga Aji Nugroho</p>
+			<p>Banyumas, 21 Januari 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/10.jpg" alt="Siswa 3">
+            <p>Arya Syaputra</p>
+			<p>Bekasi, 21 Oktober 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/11.jpg" alt="Siswa 3">
+            <p>Isma Nurul Khotimah</p>
+			<p>Bekasi, 11 Nopember 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/12.jpg" alt="Siswa 3">
+            <p>Muhamad Ipang P.</p>
+			<p>Bekasi, 27 Desember 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/13.jpg" alt="Siswa 3">
+            <p>Prayoga Wijaya</p>
+			<p>Bekasi, 03 Februari 2006 </p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/14.jpg" alt="Siswa 3">
+            <p>Siva Fauziah</p>
+			<p>Bekasi, 20 Juli 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/15.jpg" alt="Siswa 3">
+            <p>Pasha Padriani</p>
+			<p>Bekasi, 13 Oktober 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/16.jpg" alt="Siswa 3">
+            <p>Anggi Susilawati</p>
+			<p>Bekasi, 25 Juni 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/17.jpg" alt="Siswa 3">
+            <p>Lintang Adelia</p>
+			<p>Bekasi, 13 Maret 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/18.jpg" alt="Siswa 3">
+            <p>Salsabila</p>
+			<p>Bekasi, 03 Juli 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/19.jpg" alt="Siswa 3">
+            <p>Syarla Putri A.</p>
+			<p>Bekasi, 09 Mei 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/20.jpg" alt="Siswa 3">
+            <p>Zanuba Teria N.</p>
+			<p>Bekasi , 13 Mei 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/21.jpg" alt="Siswa 3">
+            <p>Ginda</p>
+			<p>Bekasi, 13 Agustus 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/22.jpg" alt="Siswa 3">
+            <p>Dedi Sugara</p>
+			<p>Bekasi, 03 Desember 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/23.jpg" alt="Siswa 3">
+            <p>Sujat</p>
+			<p>Bekasi, 12 Desember 2005 </p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/24.jpg" alt="Siswa 3">
+            <p>Fauzan Amanda</p>
+			<p>Bogor, 16 Juli 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/25.jpg" alt="Siswa 3">
+            <p>M. Taufiqurohman</p>
+			<p>Bekasi, 17 Desember 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/26.jpg" alt="Siswa 3">
+            <p>Desta Juandira F.</p>
+			<p>Bekasi, 06 Nopember 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/27.jpg" alt="Siswa 3">
+            <p>Ismail</p>
+			<p>Bekasi, 03 Mei 2006 </p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/28.jpg" alt="Siswa 3">
+            <p>Nurjanah</p>
+			<p>Klaten, 20 April 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/29.jpg" alt="Siswa 3">
+            <p>Keysa Putri</p>
+			<p>Bekasi, 31 Oktober 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/30.jpg" alt="Siswa 3">
+            <p>Zaenla Abidin M.</p>
+			<p>Bekasi, 10 Februari 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/31.jpg" alt="Siswa 3">
+            <p>Hairun Nisa Salsabila</p>
+			<p>Bekasi, 21 Agustus 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/32.jpg" alt="Siswa 3">
+            <p>Wahyu Dianeta P.</p>
+			<p>Bekasi, 26 Maret 2005</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/33.jpg" alt="Siswa 3">
+            <p>Nuriman Ninah</p>
+			<p>Bekasi, 23 Mei 2008</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/35.jpg" alt="Siswa 3">
+            <p>Siti Mutiah</p>
+			<p>Bekasi, 10 Juli 2006 </p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/36.jpg" alt="Siswa 3">
+            <p>Salwa Dwi Astuti</p>
+			<p>Bekasi, 13 Mei 2006 </p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/37.jpg" alt="Siswa 3">
+            <p>Hanifah Munawaroh</p>
+			<p>Bekasi, 26 Agustus 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/38.jpg" alt="Siswa 3">
+            <p>Siti Nur Azizah</p>
+			<p>Bekasi, 19 April 2006</p>
+        </div>
+		<div class="student-image-item">
+            <img src="Gambar siswa/39.jpg" alt="Siswa 3">
+            <p>Fauzia Alifia Agustin</p>
+			<p>Bekasi, 25 Agustus 2006</p>
+        </div>
+        <!-- Add more images as needed -->
+    </div>
+
+    <!-- Galeri Kenangan Button -->
+    <button class="gallery-btn" onclick="showKenanganGallery()">Galeri Kenangan</button>
+
+    <!-- Gallery Section for Kenangan -->
+    <div class="kenangan-gallery" id="kenangan-gallery">
+       <div class="student-image-item">
+        <img src="Galery kenangan/hari guru 2.jpeg" alt="Hari guru" onclick="openModal(this)">
+    </div>
+    <div class="student-image-item">
+        <img src="Galery kenangan/bukber 2023.jpeg" alt="buka bersama 2023" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/foto bersama 1.jpeg" alt="foto bersama" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/hari guru 3.jpeg" alt="hari guru" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/bukber 2023 fotbar.jpeg" alt="foto bersama saat bukber" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/foto bersama 1.jpeg" alt="foto bersama" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/foto bersama 2.jpeg" alt="foto bersama" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/foto random 1.jpeg" alt="foto random ga jelas" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/haflah.jpeg" alt="tampil haflah akhirussanah" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/uas 1.jpeg" alt="Selesai ujian sekolah terakhir sebelum lulus" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/hari guru 1.jpeg" alt="selamat hari guru guys" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/study tour 1.jpeg" alt="momen study tour" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/study tour 2.jpeg" alt="Momen study tour" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/foto random 2.jpeg" alt="Random lagi" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/random 3.jpeg" alt="Random lagii" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/1.jpeg" alt="lopyuu all" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/2.jpeg" alt="lopyuu all" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/3.jpeg" alt="lopyuu all" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/4.jpeg" alt="lopyuu all" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/5.jpeg" alt="lopyuu all" onclick="openModal(this)">
+    </div>
+	<div class="student-image-item">
+        <img src="Galery kenangan/6.jpeg" alt="lopyuu all" onclick="openModal(this)">
+    </div>
+	
+	
+    <!-- Add more images as needed -->
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+
+        <!-- Add more images as needed -->
+    </div>
+
+    <footer>
+        &copy; 2025 Memori Kelas Funtustic TKJ B
+    </footer>
+
+    <script>
+        var slideIndex = 0; 
+showSlides();
+
+// Fungsi untuk mengubah slide ke depan atau ke belakang
+function plusSlides(n) {
+    slideIndex += n;
+    showSlides();
+}
+
+// Fungsi untuk mengatur slide yang aktif berdasarkan indeks
+function currentSlide(n) {
+    slideIndex = n;
+    showSlides();
+}
+
+// Fungsi untuk menampilkan slide
+function showSlides() {
+    var slides = document.getElementsByClassName("slide");
+    var dots = document.getElementsByClassName("dot");
+
+    // Jika indeks melebihi jumlah slide, kembali ke slide pertama
+    if (slideIndex >= slides.length) {
+        slideIndex = 0;
+    }
+
+    // Jika indeks kurang dari 0, pindah ke slide terakhir
+    if (slideIndex < 0) {
+        slideIndex = slides.length - 1;
+    }
+
+    // Sembunyikan semua slide dan hapus kelas "active" dari semua dot
+    for (var i = 0; i < slides.length; i++) {
+        slides[i].className = slides[i].className.replace(" active", "");
+    }
+    for (var i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+
+    // Tampilkan slide aktif dan tambahkan kelas "active" ke dot terkait
+    slides[slideIndex].className += " active";
+    dots[slideIndex].className += " active";
+}
+
+// Fungsi untuk menampilkan atau menyembunyikan galeri kenangan
+function showKenanganGallery() {
+    var gallery = document.getElementById("kenangan-gallery");
+    
+    // Periksa apakah galeri saat ini tersembunyi atau tidak
+    if (gallery.style.display === "none" || gallery.style.display === "") {
+        gallery.style.display = "flex";  // Tampilkan galeri menggunakan flexbox
+    } else {
+        gallery.style.display = "none";  // Sembunyikan galeri
+    }
+}
+
+// Fungsi untuk membuka modal
+function openModal(imgElement) {
+    var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+    modal.style.display = "block";       // Menampilkan modal
+    modalImg.src = imgElement.src;       // Menampilkan gambar yang diklik di modal
+    captionText.innerHTML = imgElement.alt; // Menampilkan teks deskripsi gambar
+}
+
+// Fungsi untuk menutup modal
+function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";  // Menyembunyikan modal
+
+}
+
+        
+    </script>
+</body>
+</html>
